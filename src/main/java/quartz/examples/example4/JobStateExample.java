@@ -59,12 +59,12 @@ public class JobStateExample {
     // job1 will only run 5 times (at start time, plus 4 repeats), every 10 seconds
     JobDetail job1 = newJob(ColorJob.class).withIdentity("job1", "group1").build();
 
-    SimpleTrigger trigger1 = newTrigger().withIdentity("trigger1", "group1").startAt(startTime)
-        .withSchedule(simpleSchedule().withIntervalInSeconds(10).withRepeatCount(4)).build();
-
     // pass initialization parameters into the job
     job1.getJobDataMap().put(ColorJob.FAVORITE_COLOR, "Green");
     job1.getJobDataMap().put(ColorJob.EXECUTION_COUNT, 1);
+    SimpleTrigger trigger1 = newTrigger().withIdentity("trigger1", "group1").startAt(startTime)
+        .withSchedule(simpleSchedule().withIntervalInSeconds(10).withRepeatCount(4)).build();
+
 
     // schedule the job to run
     Date scheduleTime1 = sched.scheduleJob(job1, trigger1);
