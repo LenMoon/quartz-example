@@ -9,6 +9,8 @@ import java.util.Date;
 /**
  * Created by lm on 2016/3/11.
  */
+@PersistJobDataAfterExecution
+@DisallowConcurrentExecution
 public class CarJob implements Job{
     private static Logger _log = org.slf4j.LoggerFactory.getLogger(CarJob.class);
 
@@ -17,15 +19,12 @@ public class CarJob implements Job{
 
     private int _count=1;
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        JobKey jobKey = context.getJobDetail().getKey();
-
+        JobKey key = context.getJobDetail().getKey();
         JobDataMap data = context.getJobDetail().getJobDataMap();
-        System.out.println(data);
-        String color = data.getString(FAVORITE_COLOR);
         int count = data.getInt(RUN_COUNT);
-        count++;
-        _log.info(jobKey+" 's color: "+color+" and run: "+count+" times,at "+new Date());
-        data.put(RUN_COUNT, count);
-        _count++;
+        String favorite_color = data.getString(FAVORITE_COLOR);
+
+        _log.info(key+" run times: "+count+" and favorite_color is: "+favorite_color);
+        data.put(RUN_COUNT, ++count);
     }
 }

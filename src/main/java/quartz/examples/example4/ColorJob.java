@@ -83,6 +83,7 @@ public class ColorJob implements Job {
         
         // Grab and print passed parameters
         JobDataMap data = context.getJobDetail().getJobDataMap();
+        System.out.println("get "+data);
         String favoriteColor = data.getString(FAVORITE_COLOR);
         int count = data.getInt(EXECUTION_COUNT);
         _log.info("ColorJob: " + jobKey + " executing at " + new Date() + "\n" +
@@ -93,9 +94,9 @@ public class ColorJob implements Job {
         // increment the count and store it back into the 
         // job map so that job state can be properly maintained
         count++;
+        System.out.println("put "+data);
         data.put(EXECUTION_COUNT, count);
-        
-        // Increment the local member variable 
+        // Increment the local member variable
         // This serves no real purpose since job state can not 
         // be maintained via member variables!
         _counter++;
