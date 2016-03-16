@@ -24,6 +24,9 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 /**
  * @author Bill Kratzer
  */
@@ -38,7 +41,10 @@ public class RemoteServerExample {
     Logger log = LoggerFactory.getLogger(RemoteServerExample.class);
 
     // First we must get a reference to a scheduler
-    SchedulerFactory sf = new StdSchedulerFactory();
+    Properties server = new Properties();
+    server.load(this.getClass().getClassLoader().getResourceAsStream("server.properties"));
+    SchedulerFactory sf = new StdSchedulerFactory(server);
+
     Scheduler sched = sf.getScheduler();
 
     log.info("------- Initialization Complete -----------");

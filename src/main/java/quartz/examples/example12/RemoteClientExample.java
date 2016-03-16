@@ -30,6 +30,8 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Properties;
+
 /**
  * This example is a client program that will remotely 
  * talk to the scheduler to schedule a job.   In this 
@@ -46,7 +48,9 @@ public class RemoteClientExample {
         Logger log = LoggerFactory.getLogger(RemoteClientExample.class);
 
         // First we must get a reference to a scheduler
-        SchedulerFactory sf = new StdSchedulerFactory();
+        Properties client = new Properties();
+        client.load(this.getClass().getClassLoader().getResourceAsStream("client.properties"));
+        SchedulerFactory sf = new StdSchedulerFactory(client);
         Scheduler sched = sf.getScheduler();
 
         // define the job and ask it to run
